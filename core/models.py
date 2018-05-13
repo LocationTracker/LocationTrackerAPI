@@ -4,14 +4,14 @@ from .utils import get_usuario_upload_path
 
 
 class Familia(Model):
-    nome = CharField(max_length=30, null=True, blank=True)
+    nome = CharField(max_length=30, unique=True, null=True, blank=True)
 
     def __str__(self):
         return self.nome
 
 
 class Usuario(Model):
-    perfil_user = OneToOneField(User, on_delete=PROTECT)
+    perfil_user = OneToOneField(User, unique=True, on_delete=PROTECT)
     foto = ImageField(upload_to=get_usuario_upload_path, null=True, blank=True)
     cpf = CharField(max_length=16, null=True, blank=True)
     telefone = CharField(max_length=18, null=True, blank=True)
