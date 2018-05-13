@@ -10,3 +10,14 @@ class Familia(Model):
         return self.nome
 
 
+class Usuario(Model):
+    perfil_user = OneToOneField(User, on_delete=PROTECT)
+    foto = ImageField(upload_to=get_usuario_upload_path, null=True, blank=True)
+    cpf = CharField(max_length=16, null=True, blank=True)
+    telefone = CharField(max_length=18, null=True, blank=True)
+
+    familia = ForeignKey(Familia, null=True, blank=True, on_delete=SET_NULL)
+
+    def __str__(self):
+        assert isinstance(self.perfil_user, User)
+        return self.perfil_user.username
