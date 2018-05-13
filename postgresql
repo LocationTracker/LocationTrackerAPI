@@ -1,0 +1,8 @@
+createdb LocationTracker -O rodrigondec
+psql LocationTracker
+    \password
+
+
+dropdb LocationTracker
+
+sudo /etc/init.d/postgresql restart
