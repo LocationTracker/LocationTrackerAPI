@@ -40,6 +40,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'core.apps.CoreConfig',
+    'location.apps.LocationConfig',
     'public.apps.PublicConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -85,14 +86,25 @@ WSGI_APPLICATION = 'LocationTrackerAPI.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.dummy'
+    },
+    'core_db': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': DB_NAME,
         'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_HOST,
         'PORT': DB_PORT,
+    },
+    'location_db': {
+        'ENGINE': 'djongo',
+        'NAME': 'LocationTracker',
     }
 }
+
+DATABASE_ROUTERS = ['core.routers.CoreRouter', 'location.routers.LocationRouter']
+
+# connect('LocationTracker')
 
 
 # Password validation
