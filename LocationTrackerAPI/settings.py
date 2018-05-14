@@ -86,9 +86,6 @@ WSGI_APPLICATION = 'LocationTrackerAPI.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.dummy'
-    },
-    'core_db': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': DB_NAME,
         'USER': DB_USER,
@@ -102,7 +99,7 @@ DATABASES = {
     }
 }
 
-DATABASE_ROUTERS = ['core.routers.CoreRouter', 'location.routers.LocationRouter']
+DATABASE_ROUTERS = ['location.routers.LocationRouter']
 
 # connect('LocationTracker')
 

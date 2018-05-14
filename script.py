@@ -7,11 +7,15 @@ django.setup()
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from core.models import Usuario, Familia
+from location.models import Localizacao
 
 # users = User.objects.all()
 # for user in users:
 #     print(user)
 
+
+l = Localizacao(data="2018-04-13", lat='lat', long='long', id_usuario=1)
+l.save()
 
 
 familia = Familia(nome='Familia teste')
