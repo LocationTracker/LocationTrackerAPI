@@ -3,18 +3,17 @@
 # Instruções
 ### Configurando o ambiente de desenvolvimento
 #### Requisitos
-Instale os requisitos:
 - Python > 3.6
 - PostgreSQL 
 - MongoDB
 
-##### PostgreSQL
+##### Configurando PostgreSQL
 Crie o db `LocationTracker` seguindo os comandos do arquivo `postgresql_database_example.txt`
 
-##### MongoDB
+##### Configurando MongoDB
 Não é necessária a criação de nenhum db
 
-##### Python
+##### Configurando o ambiente virtual do Python
 ###### Instalando depêndencias
 - Criar um ambiente virtual com o comando `python -m venv env`
 - Ative o ambiente virtual (e você irá precisar refazer este único passo sempre que executar usar o sistema):
