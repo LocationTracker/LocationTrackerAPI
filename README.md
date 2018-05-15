@@ -7,11 +7,31 @@
 - PostgreSQL 
 - MongoDB
 
-##### Configurando PostgreSQL
+##### Instalando e configurando PostgreSQL
+- Windows
+  - baixe e instale do [site oficial do PostgreSQL](https://www.postgresql.org/download/)
+- Linux (debian based)
+  - instale atraves do `sudo apt-get install postgresql`
+###### Configurando
+> É criado um usuario com o nome `postgres` após a instalação. Utilize esse usuario para se conectar ao banco.
+- Windows
+
+Abra o pgAdmin e crie o db `LocationTracker`
+- Linux
+
 Crie o db `LocationTracker` seguindo os comandos do arquivo `postgresql_database_example.txt`
 
-##### Configurando MongoDB
-Não é necessária a criação de nenhum db
+##### Instalando e configurando MongoDB
+- Windows
+  - baixe do [site oficial do MongoDB](https://www.mongodb.com/download-center#community)
+  - instalar
+  - adicionar a pasta bin do mongo ao PATH do windows
+  - criar pasta `/data/db` no disco que o mongo foi instalado
+- Linux 
+  - instale atraves do `sudo apt-get install mongo`
+
+###### Mongo Compass
+baixe e instale o mongo compass para ajudar na visualização dos dados
 
 ##### Configurando o ambiente virtual do Python
 ###### Instalando depêndencias
