@@ -19,7 +19,7 @@ class Usuario(Model):
     cpf = CharField(max_length=16, null=True, blank=True)
     telefone = CharField(max_length=18, null=True, blank=True)
 
-    familia = ForeignKey(Familia, null=True, blank=True, on_delete=SET_NULL)
+    familia = ForeignKey(Familia, null=True, blank=True, on_delete=SET_NULL, related_name='participantes')
 
     def __str__(self):
         assert isinstance(self.perfil_user, User)
