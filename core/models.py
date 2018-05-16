@@ -9,6 +9,9 @@ class Familia(Model):
     def __str__(self):
         return self.nome
 
+    class Meta:
+        verbose_name = 'família'
+        verbose_name_plural = 'famílias'
 
 class Usuario(Model):
     perfil_user = OneToOneField(User, unique=True, on_delete=PROTECT)
@@ -21,3 +24,7 @@ class Usuario(Model):
     def __str__(self):
         assert isinstance(self.perfil_user, User)
         return self.perfil_user.username
+
+    class Meta:
+        verbose_name = 'usuário'
+        verbose_name_plural = 'usuários'

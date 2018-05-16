@@ -6,3 +6,7 @@ class Localizacao(Document):
     data = DateField()
     lat = StringField(max_length=30)
     long = StringField(max_length=30)
+
+    class Meta:
+        verbose_name = 'localização'
+        verbose_name_plural = 'localizações'
