@@ -37,7 +37,7 @@ baixe e instale o mongo compass para ajudar na visualização dos dados
     - No Windows, execute no prompt (cmd): `env\Scripts\activate.bat`
     - No Unix ou MacOS, execute no terminal (bash): `source env/bin/activate`
 - Instalar as dependências pelo comando `pip install -r requirements.txt`
-### Configurando Conexão com o psql
+### Configurando Conexão com o psql e mongo
 - Criar o arquivo `config.py` (com as informações de conexão configuradas do psql) na pasta `LocationTrackerAPI` usando o arquivo `config_example.py` de exemplo
 ### Gerando migrações iniciais
 - Execute o comando `python manage.py makemigrations`
