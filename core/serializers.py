@@ -5,14 +5,16 @@ from .models import Familia, Usuario
 
 class FamiliaSerializer(serializers.ModelSerializer):
     nome = serializers.CharField()
+    participantes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Familia
-        fields = ('url', 'nome')
+        fields = ('url', 'nome', 'participantes')
 
 
 class UsuarioSerializer(serializers.ModelSerializer):
-    familia = FamiliaSerializer()
+    familia_nome = serializers.PrimaryKeyRelatedField(source='familia.nome', many=False, read_only=True)
+    familia = serializers.PrimaryKeyRelatedField(many=False, queryset=Familia.objects.all())
     username = serializers.CharField(source='perfil_user.username')
     email = serializers.EmailField(source='perfil_user.email')
     password = serializers.CharField(source='perfil_user.password')
@@ -22,4 +24,4 @@ class UsuarioSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Usuario
-        fields = ('url', 'username', 'email', 'password', 'foto', 'cpf', 'telefone', 'familia')
+        fields = ('url', 'username', 'email', 'password', 'foto', 'cpf', 'telefone', 'familia', 'familia_nome')
