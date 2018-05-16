@@ -51,4 +51,3 @@ Considerando que todo o ambiente foi corretamente instalado e configurado, sempr
 - Execute novamente o passo de ativação do ambiente virtual
 - Inicie o servidor com `python manage.py runserver` e leia o output que lhe dirá em qual endereço IP e porta a aplicação está rodando
     - Se for "0.0.0.0" significa que está aberto para toda sua rede interna, e você deve encontrar seu IP público (no Linux, use ```ifconfig```)
-- Se você souber como usar aplicações RESTful, consulte nossa documentação, e o comando ```curl``` poderá lhe ajudar a formar as requisições
