@@ -18,7 +18,7 @@ Abra o pgAdmin e crie o db `LocationTracker`
 
 Crie o db `LocationTracker` seguindo os comandos do arquivo `postgresql_database_example.txt`
 
-### Instalando e configurando MongoDB
+## Instalando e configurando MongoDB
 - Windows
   - baixe do [site oficial do MongoDB](https://www.mongodb.com/download-center#community)
   - instalar
@@ -27,23 +27,23 @@ Crie o db `LocationTracker` seguindo os comandos do arquivo `postgresql_database
 - Linux 
   - instale atraves do `sudo apt-get install mongo`
 
-#### Mongo Compass
+### Mongo Compass
 baixe e instale o mongo compass para ajudar na visualização dos dados
 
-### Configurando o ambiente virtual do Python
-#### Instalando depêndencias
+## Configurando o ambiente virtual do Python
+### Instalando depêndencias
 - Criar um ambiente virtual com o comando `python -m venv env`
 - Ative o ambiente virtual (e você irá precisar refazer este único passo sempre que executar usar o sistema):
     - No Windows, execute no prompt (cmd): `env\Scripts\activate.bat`
     - No Unix ou MacOS, execute no terminal (bash): `source env/bin/activate`
 - Instalar as dependências pelo comando `pip install -r requirements.txt`
-#### Configurando Conexão com o psql
+### Configurando Conexão com o psql
 - Criar o arquivo `config.py` (com as informações de conexão configuradas do psql) na pasta `LocationTrackerAPI` usando o arquivo `config_example.py` de exemplo
-#### Gerando migrações iniciais
+### Gerando migrações iniciais
 - Execute o comando `python manage.py makemigrations`
 - Execute o comando `python manage.py migrate`
 - Execute o comando `python manage.py migrate location --database=location_db`
-#### Populando o banco de dados
+### Populando o banco de dados
 - Execute o comando `python script.py`
 
 # Rodando a aplicação
