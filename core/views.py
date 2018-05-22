@@ -96,24 +96,3 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         locations = Localizacao.objects.filter(id_usuario=usuario.id)
         serializer = LocalizacaoSerializer(locations, many=True)
         return Response(serializer.data)
-
-
-class ListUsers(APIView):
-    """
-    View to list all users in the system.
-    * Requires token authentication.
-    * Only admin users are able to access this view.
-    """
-    # authentication_classes = []
-    queryset = Usuario.objects.all()
-    permission_classes = [
-        IsAuthenticated,
-    ]
-
-    def get(self, request, format=None):
-        """
-        Return a list of all users.
-        """
-        usuarios = Usuario.objects.all()
-        serializer = UsuarioSerializer(usuarios, context={'request': request})
-        return Response(serializer.data)
