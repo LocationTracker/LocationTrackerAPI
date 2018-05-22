@@ -9,7 +9,8 @@ class FamiliaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Familia
-        fields = ('url', 'nome', 'participantes')
+        # fields = ('url', 'nome', 'participantes')
+        fields = '__all__'
 
 
 class UsuarioSerializer(serializers.ModelSerializer):
@@ -24,4 +25,5 @@ class UsuarioSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Usuario
-        fields = ('url', 'username', 'email', 'password', 'foto', 'cpf', 'telefone', 'familia', 'familia_nome')
+        # fields = ('url', 'username', 'email', 'password', 'foto', 'cpf', 'telefone', 'familia', 'familia_nome')
+        fields = '__all__'
