@@ -13,3 +13,14 @@ class LocalizacaoSerializer(serializers.ModelSerializer):
         model = Localizacao
         # fields = ('url', 'id_usuario', 'data', 'lat', 'long')
         fields = '__all__'
+
+
+class LocalizacaoSerializerPost(serializers.ModelSerializer):
+    data = serializers.DateTimeField()
+    lat = serializers.CharField()
+    long = serializers.CharField()
+
+    class Meta:
+        model = Localizacao
+        fields = ('data', 'lat', 'long')
+        # fields = '__all__'
