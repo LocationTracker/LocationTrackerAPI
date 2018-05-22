@@ -9,21 +9,21 @@ from .models import Localizacao
 class LocalizacaoViewSet(viewsets.ModelViewSet):
     """
     retrieve:
-        Return a user instance.
+        Retorna uma localização
     list:
-        Return all users, ordered by most recently joined.
+        Retorna todas as localizações
     create:
-        Create a new user.
+        Cria uma nova localização
     delete:
-        Remove an existing user.
+        Remove uma localização existente
     partial_update:
-        Update one or more fields on an existing user.
+        Atualiza um ou mais campos de uma localização existente
     update:
-        Update a user.
+        Atualiza uma localização
     """
     queryset = Localizacao.objects.all()
     serializer_class = LocalizacaoSerializer
     # permission_classes = [
     #     IsAuthenticated,
     # ]
-    # http_method_names = ['get', 'post', 'put', 'delete']
+    http_method_names = ['get', 'post']
