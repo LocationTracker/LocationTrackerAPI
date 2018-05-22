@@ -1,53 +1,58 @@
 from rest_framework import viewsets
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import FamiliaSerializer, UsuarioSerializer
 from .models import Familia, Usuario
+from location.models import Localizacao
+from location.serializers import LocalizacaoSerializer
 
 
 class FamiliaViewSet(viewsets.ModelViewSet):
     """
     retrieve:
-        Return a user instance.
+        Retorna uma família
     list:
-        Return all users, ordered by most recently joined.
+        Retorna todas as famílias
     create:
-        Create a new user.
+        Cria uma nova família
     delete:
-        Remove an existing user.
+        Remove uma família existente
     partial_update:
-        Update one or more fields on an existing user.
+        Atualiza um ou mais campos de uma família existente
     update:
-        Update a user.
+        Atualiza uma família
     """
     queryset = Familia.objects.all()
     serializer_class = FamiliaSerializer
     # permission_classes = [
     #     IsAuthenticated,
     # ]
-    # http_method_names = ['get', 'post', 'put', 'delete']
+    http_method_names = ['get', 'post', 'put', 'patch']
+
 
 class UsuarioViewSet(viewsets.ModelViewSet):
     """
     retrieve:
-        Return a user instance.
+        Retorna um usuário
     list:
-        Return all users, ordered by most recently joined.
+        Retorna todos os usuários
     create:
-        Create a new user.
+        Cria um novo usuário
     delete:
-        Remove an existing user.
+        Remove um usuário existente
     partial_update:
-        Update one or more fields on an existing user.
+        Atualiza um ou mais campos de um usuário existente
     update:
-        Update a user.
+        Atualiza um usuário
     """
     # permission_classes = [
     #     IsAuthenticated,
     # ]
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
+    http_method_names = ['get', 'post', 'put', 'patch']
 
 
 class ListUsers(APIView):
