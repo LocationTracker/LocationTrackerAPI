@@ -5,7 +5,7 @@ from .models import Localizacao
 
 class LocalizacaoSerializer(serializers.ModelSerializer):
     id_usuario = serializers.IntegerField()
-    data = serializers.DateField()
+    data = serializers.DateTimeField()
     lat = serializers.CharField()
     long = serializers.CharField()
 
