@@ -8,14 +8,17 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from core.models import Usuario, Familia
 from location.models import Localizacao
+from datetime import datetime
 
 # users = User.objects.all()
 # for user in users:
 #     print(user)
 
+l1 = Localizacao(data=datetime.now(), lat='lat1', long='long1', id_usuario=1)
+l1.save()
 
-l = Localizacao(data="2018-04-13", lat='lat', long='long', id_usuario=1)
-l.save()
+l2 = Localizacao(data=datetime.now(), lat='lat2', long='long2', id_usuario=2)
+l2.save()
 
 
 familia = Familia(nome='Familia teste')
