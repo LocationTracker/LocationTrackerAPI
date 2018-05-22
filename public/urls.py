@@ -1,7 +1,6 @@
-from django.contrib import admin
-from django.urls import path, include
-from .views import index
+from django.urls import path
+from .views import create_user
 
 urlpatterns = [
-    path('', index, name='home page')
+    path('', create_user, name='home page')
 ]
