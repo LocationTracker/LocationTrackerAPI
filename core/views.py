@@ -2,8 +2,8 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from core.serializers import FamiliaSerializer, UsuarioSerializer
-from core.models import Familia, Usuario
+from .serializers import FamiliaSerializer, UsuarioSerializer
+from .models import Familia, Usuario
 
 
 class FamiliaViewSet(viewsets.ModelViewSet):
