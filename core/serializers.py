@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Familia, Usuario
+from .models import Familia, PerfilUsuario
 
 
 class FamiliaSerializer(serializers.ModelSerializer):
@@ -16,14 +16,13 @@ class FamiliaSerializer(serializers.ModelSerializer):
 class UsuarioSerializer(serializers.ModelSerializer):
     familia_nome = serializers.PrimaryKeyRelatedField(source='familia.nome', many=False, read_only=True)
     familia = serializers.PrimaryKeyRelatedField(many=False, queryset=Familia.objects.all())
-    username = serializers.CharField(source='perfil_user.username')
-    email = serializers.EmailField(source='perfil_user.email')
-    password = serializers.CharField(source='perfil_user.password')
+    username = serializers.CharField(source='user.username')
+    email = serializers.EmailField(source='user.email')
     # foto = serializers.ImageField()
     cpf = serializers.CharField()
     telefone = serializers.CharField()
 
     class Meta:
-        model = Usuario
+        model = PerfilUsuario
         # fields = ('url', 'username', 'email', 'password', 'foto', 'cpf', 'telefone', 'familia', 'familia_nome')
         fields = '__all__'
