@@ -27,6 +27,16 @@ class PerfilUsuario(Model):
         assert isinstance(self.user, User)
         return self.user.username
 
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            try:
+                p = PerfilUsuario.objects.get(user=self.user)
+                self.pk = p.pk
+            except PerfilUsuario.DoesNotExist:
+                pass
+
+        super(PerfilUsuario, self).save(*args, **kwargs)
+
     class Meta:
         verbose_name = 'perfil usuário'
         verbose_name_plural = 'perfis usuários'
@@ -37,5 +47,4 @@ def create_usuario(sender, **kwargs):
     if kwargs["created"]:
         usuario = PerfilUsuario(user=user)
         usuario.save()
-
 post_save.connect(create_usuario, sender=User)
