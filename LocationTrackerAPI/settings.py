@@ -169,7 +169,8 @@ STATIC_PATH = os.path.join(PROJECT_PATH,'static')
 STATIC_ROOT = os.path.join(SETTINGS_DIR, 'static')
 STATIC_URL = '/static/' # You may find this is already defined as such.
 STATICFILES_DIRS = (
-    os.path.join(STATIC_PATH, "imgs"),
+    os.path.join(STATIC_PATH, "css"),
+    os.path.join(STATIC_PATH, "img"),
 )
 
 

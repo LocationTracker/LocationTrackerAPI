@@ -1,4 +1,4 @@
-from django.db.models import Model, CharField, ImageField, OneToOneField, ForeignKey, PROTECT, SET_NULL
+from django.db.models import Model, CharField, ImageField, OneToOneField, ForeignKey, PROTECT, SET_NULL, CASCADE
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from .utils import get_usuario_upload_path
@@ -16,7 +16,7 @@ class Familia(Model):
 
 
 class PerfilUsuario(Model):
-    user = OneToOneField(User, unique=True, on_delete=PROTECT, related_name='perfil')
+    user = OneToOneField(User, unique=True, on_delete=CASCADE, related_name='perfil')
     foto = ImageField(upload_to=get_usuario_upload_path, null=True, blank=True)
     cpf = CharField(max_length=16, null=True, blank=True)
     telefone = CharField(max_length=18, null=True, blank=True)
