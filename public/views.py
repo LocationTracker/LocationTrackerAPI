@@ -21,6 +21,7 @@ def create_user(request):
             created_user = user_form.save(commit=False)
             formset = ProfileInlineFormset(request.POST, request.FILES, instance=created_user)
             created_user.set_password(request.POST['password'])
+            # formset.foto = request.FILES['perfil-0-foto']
             if formset.is_valid():
                 created_user.save()
                 formset.save()
