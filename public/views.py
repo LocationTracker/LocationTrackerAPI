@@ -11,8 +11,9 @@ def create_user(request):
     user_form = UserForm(instance=user)
 
     ProfileInlineFormset = inlineformset_factory(User, PerfilUsuario,
-                                                 fields=('cpf', 'telefone', 'foto'))
+                                                 fields=('cpf', 'telefone', 'foto'), can_delete=False)
     formset = ProfileInlineFormset(instance=user)
+
     if request.method == "POST":
         user_form = UserForm(request.POST, request.FILES, instance=user)
         formset = ProfileInlineFormset(request.POST, request.FILES, instance=user)
@@ -21,7 +22,11 @@ def create_user(request):
             created_user = user_form.save(commit=False)
             formset = ProfileInlineFormset(request.POST, request.FILES, instance=created_user)
             created_user.set_password(request.POST['password'])
-            # formset.foto = request.FILES['perfil-0-foto']
+            try:
+                formset.foto = request.FILES['perfil-0-foto']
+            except KeyError:
+                pass
+
             if formset.is_valid():
                 created_user.save()
                 formset.save()
