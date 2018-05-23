@@ -17,3 +17,4 @@ admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
 admin.site.register(Familia)
+# admin.site.register(PerfilUsuario)
