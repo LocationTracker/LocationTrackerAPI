@@ -53,4 +53,4 @@ Considerando que todo o ambiente foi corretamente instalado e configurado, sempr
 - Inicie o PostgreSQL 
   - no windows com o comando `pg_ctl.exe restart -D "C:\Program Files\PostgreSQL\9.6\data"`
 - Inicie o servidor com `python manage.py runserver` e leia o output que lhe dirá em qual endereço IP e porta a aplicação está rodando
-    - Se for "0.0.0.0" significa que está aberto para toda sua rede interna, e você deve encontrar seu IP público (no Linux, use ```ifconfig```)
+    - Se rodar com o comando `manage.py runserver 0.0.0.0:8000` significa que está aberto para toda sua rede interna, e você deve encontrar seu IP público (no Linux, use ```ifconfig```)
