@@ -1,9 +1,16 @@
-from djongo.models import Model as Document, CharField as StringField, IntegerField as IntField, DateTimeField
+from djongo.models import Model as Document, CharField as StringField, IntegerField as IntField, DateTimeField, DateField
 
+class LocalizacaoUsuario(Document):
+    id_usuario = IntField()
+    # DataLocalizacao
+
+class DataLocalizacao(Document):
+    data = DateField()
+    # Localizacao
 
 class Localizacao(Document):
-    id_usuario = IntField()
     data = DateTimeField()
+    
     lat = StringField(max_length=30)
     long = StringField(max_length=30)
 
