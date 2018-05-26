@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Localizacao
+from .models import UsuarioLocalizacao
 
 # Register your models here.
-admin.site.register(Localizacao)
+admin.site.register(UsuarioLocalizacao)

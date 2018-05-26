@@ -6,21 +6,41 @@ django.setup()
 
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from djongo.sql2mongo import SQLDecodeError
 from core.models import PerfilUsuario, Familia
-from location.models import Localizacao
+from location.models import Localizacao, DiaLocalizacao, MesLocalizacao, AnoLocalizacao, UsuarioLocalizacao
+from datetime import date, datetime
 
 
 # users = User.objects.all()
 # for user in users:
 #     print(user)
 
-DATA_LOCAL = "2018-05-22T17:06:20.976000Z"
+ANO_LOCAL = 2018
+MES_LOCAL = 5
+DIA_LOCAL = 26
 
-l1 = Localizacao(data=DATA_LOCAL, lat='lat1', long='long1', id_usuario=1)
-l1.save()
+HORA_LOCAL = 18
+MINUTOS_LOCAL = 1
 
-l2 = Localizacao(data=DATA_LOCAL, lat='lat2', long='long2', id_usuario=2)
-l2.save()
+l = Localizacao(hora=HORA_LOCAL, minutos=MINUTOS_LOCAL, lat='lat1', long='long1')
+dl = DiaLocalizacao(value=DIA_LOCAL, localizacoes=[l])
+ml = MesLocalizacao(value=MES_LOCAL, dias=[dl])
+al = AnoLocalizacao(value=ANO_LOCAL, meses=[ml])
+
+ul1 = UsuarioLocalizacao(id_usuario=1, anos=[al])
+try:
+    ul1.save()
+except SQLDecodeError as e:
+    ul1 = UsuarioLocalizacao.objects.get(id_usuario=1)
+    print(e)
+
+ul2 = UsuarioLocalizacao(id_usuario=2, anos=[al])
+try:
+    ul2.save()
+except SQLDecodeError as e:
+    ul2 = UsuarioLocalizacao.objects.get(id_usuario=2)
+    print(e)
 
 
 familia = Familia(nome='Familia teste')
