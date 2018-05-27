@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import FamiliaSerializer, UsuarioSerializer
 from .models import Familia, PerfilUsuario
-from location.models import Localizacao
-from location.serializers import LocalizacaoSerializer, LocalizacaoSerializerPost
+from location.models import UsuarioLocalizacao
+from location.serializers import UsuarioLocalizacaoSerializer, FilterLocalizacaoSerializer
 
 
 class FamiliaViewSet(viewsets.ModelViewSet):
@@ -64,38 +64,49 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         serializer = UsuarioSerializer(membros, many=True)
         return Response(serializer.data)
 
-    @action(methods=['get'], detail=True, serializer_class=LocalizacaoSerializer)
-    def get_family_locations(self, request, pk=None):
-        """
-        Retorna as localizações do membros familiares de um usuário existente
-        """
-        usuario = self.get_object()
-        membros = PerfilUsuario.objects.filter(familia=usuario.familia)
-        locations = Localizacao.objects
-        for membro in membros:
-            locations.filter(id_usuario=membro.id)
-        serializer = LocalizacaoSerializer(locations, many=True)
-        return Response(serializer.data)
+    # @action(methods=['get'], detail=True, serializer_class=LocalizacaoSerializer)
+    # def get_family_locations(self, request, pk=None):
+    #     """
+    #     Retorna as localizações do membros familiares de um usuário existente
+    #     """
+    #     usuario = self.get_object()
+    #     membros = PerfilUsuario.objects.filter(familia=usuario.familia)
+    #     locations = Localizacao.objects
+    #     for membro in membros:
+    #         locations.filter(id_usuario=membro.id)
+    #     serializer = LocalizacaoSerializer(locations, many=True)
+    #     return Response(serializer.data)
 
-    @action(methods=['get'], detail=True, serializer_class=LocalizacaoSerializer)
+    @action(methods=['get'], detail=True, serializer_class=UsuarioLocalizacaoSerializer)
     def get_locations(self, request, pk=None):
         """
         Retorna a lista de localizações de um usuário existente
         """
         usuario = self.get_object()
-        locations = Localizacao.objects.filter(id_usuario=usuario.id)
-        serializer = LocalizacaoSerializer(locations, many=True)
+        usuario_locations = UsuarioLocalizacao.objects.get(id_usuario=usuario.id)
+        serializer = UsuarioLocalizacaoSerializer(usuario_locations)
         return Response(serializer.data)
 
-    @action(methods=['post'], detail=True, serializer_class=LocalizacaoSerializerPost)
-    def send_location(self, request, pk=None):
+    @action(methods=['post'], detail=True, serializer_class=FilterLocalizacaoSerializer)
+    def get_locations(self, request, pk=None):
         """
-        Registra uma nova localização de um usuário existente
+        Retorna a lista de localizações de um usuário existente de acordo com os filtros passados
         """
-        request.data['id_usuario'] = pk
-        serializer = LocalizacaoSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        usuario = self.get_object()
+        usuario_locations = UsuarioLocalizacao.objects.get(id_usuario=usuario.id)
+        # @TODO FAZER REMOCAO DE ITENS
+        serializer = UsuarioLocalizacaoSerializer(usuario_locations)
+        return Response(serializer.data)
+
+    # @action(methods=['post'], detail=True, serializer_class=LocalizacaoSerializerPost)
+    # def send_location(self, request, pk=None):
+    #     """
+    #     Registra uma nova localização de um usuário existente
+    #     """
+    #     request.data['id_usuario'] = pk
+    #     serializer = LocalizacaoSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     else:
+    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
