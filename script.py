@@ -23,32 +23,38 @@ DIA_LOCAL = 26
 HORA_LOCAL = 18
 MINUTOS_LOCAL = 1
 
-l = Localizacao(hora=HORA_LOCAL, minutos=MINUTOS_LOCAL, lat='lat1', long='long1')
-dl = DiaLocalizacao(value=DIA_LOCAL, localizacoes=[l])
-ml = MesLocalizacao(value=MES_LOCAL, dias=[dl])
-al = AnoLocalizacao(value=ANO_LOCAL, meses=[ml])
+LOCALIZACAO_LOCAL = Localizacao(hora=HORA_LOCAL, minutos=MINUTOS_LOCAL, lat='lat11', long='long11')
 
-ul1 = UsuarioLocalizacao(id_usuario=1, anos=[al])
+# dl = DiaLocalizacao(value=DIA_LOCAL, localizacoes=[LOCALIZACAO_LOCAL])
+# ml = MesLocalizacao(value=MES_LOCAL, dias=[dl])
+# al = AnoLocalizacao(value=ANO_LOCAL, meses=[ml])
+
+ul1 = UsuarioLocalizacao(id_usuario=1)
 try:
     ul1.save()
 except SQLDecodeError as e:
     ul1 = UsuarioLocalizacao.objects.get(id_usuario=1)
-    print(e)
+    # print(e)
 
-ul2 = UsuarioLocalizacao(id_usuario=2, anos=[al])
+print(ul1.add_localizacao(ANO_LOCAL, MES_LOCAL, DIA_LOCAL, LOCALIZACAO_LOCAL))
+ul1.save()
+
+ul2 = UsuarioLocalizacao(id_usuario=2)
 try:
     ul2.save()
 except SQLDecodeError as e:
     ul2 = UsuarioLocalizacao.objects.get(id_usuario=2)
-    print(e)
+    # print(e)
 
+print(ul2.add_localizacao(ANO_LOCAL, MES_LOCAL, DIA_LOCAL, LOCALIZACAO_LOCAL))
+ul2.save()
 
 familia = Familia(nome='Familia teste')
 try:
     familia.save()
 except IntegrityError as e:
     familia = Familia.objects.get(nome='Familia teste')
-    print(e)
+    # print(e)
 
 
 
@@ -60,7 +66,7 @@ try:
     rodrigo.save()
 except IntegrityError as e:
     rodrigo = User.objects.get(username='rodrigondec')
-    print(e)
+    # print(e)
 
 rodrigo.perfil.familia = familia
 rodrigo.perfil.save()
@@ -73,7 +79,7 @@ try:
     wesley.save()
 except IntegrityError as e:
     wesley = User.objects.get(username='wreuel')
-    print(e)
+    # print(e)
 
 wesley.perfil.familia = familia
 wesley.perfil.save()
