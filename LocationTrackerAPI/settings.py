@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 from .config import DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD,\
-    MONGO_HOST, MONGO_PORT, MONGO_NAME, MONGO_USER, MONGO_PASSWORD
+    MONGO_HOST, MONGO_PORT, MONGO_NAME, MONGO_USER
+from mongoengine import connect
 
 
 SETTINGS_DIR = os.path.dirname(__file__)
@@ -123,6 +124,8 @@ DATABASES = {
             # 'READ_PREFERENCE': 'read_preference'
         }
 }
+
+connect(MONGO_NAME)
 
 DATABASE_ROUTERS = ['location.routers.LocationRouter']
 
