@@ -1,5 +1,5 @@
 from djongo.models import Model as Document, CharField as StringField, IntegerField as IntField, ArrayModelField
-
+from django_mongoengine import Document, EmbeddedDocument, fields
 
 class Localizacao(Document):
     hora = IntField()
@@ -45,10 +45,10 @@ class MesLocalizacao(Document):
 
 class AnoLocalizacao(Document):
     value = IntField()
-    meses = ArrayModelField(
-        model_container=MesLocalizacao,
-        default=[]
-    )
+    # meses = ArrayModelField(
+    #     model_container=MesLocalizacao,
+    #     default=[]
+    # )
 
     def __str__(self):
         return 'Ano {}'.format(self.value)

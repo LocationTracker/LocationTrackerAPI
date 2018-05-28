@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework_swagger'
+    'rest_framework_swagger',
+    'django_mongoengine'
 ]
 
 MIDDLEWARE = [
@@ -121,7 +122,17 @@ DATABASES = {
             # 'SSL_CERTFILE': ssl.CERT_NONE
             # 'SSL_CA_CERTS': 'ssl_ca_certs',
             # 'READ_PREFERENCE': 'read_preference'
-        }
+    }
+}
+
+MONGODB_DATABASES = {
+    "default": {
+        "name": MONGO_NAME,
+        "host": MONGO_HOST,
+        "password": MONGO_PASSWORD,
+        "username": MONGO_USER
+        # "tz_aware": True, # if you using timezones in django (USE_TZ = True)
+    },
 }
 
 DATABASE_ROUTERS = ['location.routers.LocationRouter']
