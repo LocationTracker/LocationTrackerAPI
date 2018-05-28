@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from .serializers import FamiliaSerializer, UsuarioSerializer
 from .models import Familia, PerfilUsuario
 from location.models import UsuarioLocalizacao
-from location.serializers import UsuarioLocalizacaoSerializer, FilterLocalizacaoSerializer
+from location.serializers import UsuarioLocalizacaoSerializer, AnoSerializer, MesSerializer, DiaSerializer, HoraSerializer, LocalizacaoSerializer, FilterLocalizacaoSerializer
 
 
 class FamiliaViewSet(viewsets.ModelViewSet):
@@ -88,7 +88,7 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     @action(methods=['post'], detail=True, serializer_class=FilterLocalizacaoSerializer)
-    def get_locations(self, request, pk=None):
+    def filter_locations(self, request, pk=None):
         """
         Retorna a lista de localizações de um usuário existente de acordo com os filtros passados
         """
