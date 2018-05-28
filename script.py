@@ -6,6 +6,7 @@ django.setup()
 
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from mongoengine.errors import NotUniqueError
 from djongo.sql2mongo import SQLDecodeError
 from core.models import PerfilUsuario, Familia
 from location.models import Localizacao, DiaLocalizacao, MesLocalizacao, AnoLocalizacao, UsuarioLocalizacao
@@ -16,37 +17,33 @@ from datetime import date, datetime
 # for user in users:
 #     print(user)
 
-ANO_LOCAL = 2018
-MES_LOCAL = 5
-DIA_LOCAL = 26
+ANO_LOCAL = '2019'
+MES_LOCAL = '6'
+DIA_LOCAL = '27'
 
-HORA_LOCAL = 18
-MINUTOS_LOCAL = 1
+HORA_LOCAL = '19'
+MINUTOS_LOCAL = '5'
 
-LOCALIZACAO_LOCAL = Localizacao(hora=HORA_LOCAL, minutos=MINUTOS_LOCAL, lat='lat11', long='long11')
-
-# dl = DiaLocalizacao(value=DIA_LOCAL, localizacoes=[LOCALIZACAO_LOCAL])
-# ml = MesLocalizacao(value=MES_LOCAL, dias=[dl])
-# al = AnoLocalizacao(value=ANO_LOCAL, meses=[ml])
+LOCALIZACAO_LOCAL = Localizacao(minutos=MINUTOS_LOCAL, lat='lat11', long='long11')
 
 ul1 = UsuarioLocalizacao(id_usuario=1)
 try:
     ul1.save()
-except SQLDecodeError as e:
+except NotUniqueError as e:
     ul1 = UsuarioLocalizacao.objects.get(id_usuario=1)
     # print(e)
 
-print(ul1.add_localizacao(ANO_LOCAL, MES_LOCAL, DIA_LOCAL, LOCALIZACAO_LOCAL))
+ul1.add_location(ANO_LOCAL, MES_LOCAL, DIA_LOCAL, HORA_LOCAL, LOCALIZACAO_LOCAL)
 ul1.save()
 
 ul2 = UsuarioLocalizacao(id_usuario=2)
 try:
     ul2.save()
-except SQLDecodeError as e:
+except NotUniqueError as e:
     ul2 = UsuarioLocalizacao.objects.get(id_usuario=2)
     # print(e)
 
-print(ul2.add_localizacao(ANO_LOCAL, MES_LOCAL, DIA_LOCAL, LOCALIZACAO_LOCAL))
+ul2.add_location(ANO_LOCAL, MES_LOCAL, DIA_LOCAL, HORA_LOCAL, LOCALIZACAO_LOCAL)
 ul2.save()
 
 familia = Familia(nome='Familia teste')
