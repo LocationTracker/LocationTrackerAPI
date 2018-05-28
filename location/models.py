@@ -22,6 +22,9 @@ class DiaLocalizacao(Document):
         default=[]
     )
 
+    def __str__(self):
+        return 'Dia {}'.format(self.value)
+
     class Meta:
         abstract = True
 
@@ -33,6 +36,9 @@ class MesLocalizacao(Document):
         default=[]
     )
 
+    def __str__(self):
+        return 'Mes {}'.format(self.value)
+
     class Meta:
         abstract = True
 
@@ -43,6 +49,9 @@ class AnoLocalizacao(Document):
         model_container=MesLocalizacao,
         default=[]
     )
+
+    def __str__(self):
+        return 'Ano {}'.format(self.value)
 
     class Meta:
         abstract = True
