@@ -56,6 +56,22 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         serializer = UsuarioLocalizacaoSerializer(locations, many=True)
         return Response(serializer.data)
 
+    @action(methods=['get'], detail=True, serializer_class=LastLocalizacaoSerializer)
+    def get_family_last_location(self, request, pk=None):
+        """
+        Retorna a última localização dos membros familiares de um usuário existente
+        """
+        usuario = self.get_object()
+        membros = PerfilUsuario.objects.filter(familia=usuario.familia)
+        last_locations = []
+        us_loc = UsuarioLocalizacao.objects
+        for membro in membros:
+            us_loc.filter(id_usuario=membro.id)
+        for u_loc in us_loc:
+            last_locations.append(u_loc.get_last_location())
+        serializer = LastLocalizacaoSerializer(last_locations, many=True)
+        return Response(serializer.data)
+
     @action(methods=['get'], detail=True, serializer_class=UsuarioLocalizacaoSerializer)
     def get_locations(self, request, pk=None):
         """

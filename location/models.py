@@ -129,7 +129,7 @@ class UsuarioLocalizacao(Document):
         ano_recente = None
         for key, ano in self.anos.items():
             if ano_recente is None or ano_recente.value <= ano.value:
-                print('ano mais recente {}'.format(ano))
+                # print('ano mais recente {}'.format(ano))
                 ano_recente = ano
         data = {'resp': {'ano': ano_recente.value}}
         return {'recente': ano_recente, 'resp': data['resp']}
@@ -140,7 +140,7 @@ class UsuarioLocalizacao(Document):
         mes_recente = None
         for key, mes in ano.meses.items():
             if mes_recente is None or mes_recente.value <= mes.value:
-                print('Mes mais recente {}'.format(mes))
+                # print('Mes mais recente {}'.format(mes))
                 mes_recente = mes
         data['resp']['mes'] = mes_recente.value
         return {'recente': mes_recente, 'resp': data['resp']}
@@ -151,7 +151,7 @@ class UsuarioLocalizacao(Document):
         dia_recente = None
         for key, dia in mes.dias.items():
             if dia_recente is None or dia_recente.value <= dia.value:
-                print('Dia mais recente {}'.format(dia))
+                # print('Dia mais recente {}'.format(dia))
                 dia_recente = dia
         data['resp']['dia'] = dia_recente.value
         return {'recente': dia_recente, 'resp': data['resp']}
@@ -162,7 +162,7 @@ class UsuarioLocalizacao(Document):
         hora_recente = None
         for key, hora in dia.horas.items():
             if hora_recente is None or hora_recente.value <= hora.value:
-                print('Hora mais recente {}'.format(hora))
+                # print('Hora mais recente {}'.format(hora))
                 hora_recente = hora
         data['resp']['hora'] = hora_recente.value
         return {'recente': hora_recente, 'resp': data['resp']}
@@ -173,7 +173,7 @@ class UsuarioLocalizacao(Document):
         localizacao_recente = None
         for key, localizacao in hora.localizacoes.items():
             if localizacao_recente is None or localizacao_recente.minutos <= localizacao.minutos:
-                print('Hora mais recente {}'.format(hora))
+                # print('Hora mais recente {}'.format(hora))
                 localizacao_recente = localizacao
         data['resp']['minutos'] = localizacao_recente.minutos
         data['resp']['lat'] = localizacao_recente.lat
@@ -183,25 +183,25 @@ class UsuarioLocalizacao(Document):
 
     def add_location(self, ano, mes, dia, hora, minutos, lat, long):
         if self._verify_ano(ano):
-            print('has ano')
+            # print('has ano')
             if self._verify_mes(ano, mes):
-                print('has mes')
+                # print('has mes')
                 if self._verify_dia(ano, mes, dia):
-                    print('has dia')
+                    # print('has dia')
                     if self._verify_hora(ano, mes, dia, hora):
-                        print('has hora')
+                        # print('has hora')
                         self.anos[ano].meses[mes].dias[dia].horas[hora].localizacoes[minutos] = self._create_localizacao(minutos, lat, long)
                     else:
-                        print('create hora')
+                        # print('create hora')
                         self.anos[ano].meses[mes].dias[dia].horas[hora] = self._create_hora(hora, minutos, lat, long)
                 else:
-                    print('create dia')
+                    # print('create dia')
                     self.anos[ano].meses[mes].dias[dia] = self._create_dia(dia, hora, minutos, lat, long)
             else:
-                print('create mes')
+                # print('create mes')
                 self.anos[ano].meses[mes] = self._create_mes(mes, dia, hora, minutos, lat, long)
         else:
-            print('create ano')
+            # print('create ano')
             self.anos[ano] = self._create_ano(ano, mes, dia, hora, minutos, lat, long)
 
     def add_location_data(self, data):
