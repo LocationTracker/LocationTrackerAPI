@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework.serializers import Serializer, CharField
 from rest_framework_mongoengine.serializers import EmbeddedDocumentSerializer, DocumentSerializer
 from rest_framework_mongoengine.fields import DictField
 from .models import UsuarioLocalizacao, AnoLocalizacao, MesLocalizacao, DiaLocalizacao, HoraLocalizacao, Localizacao
@@ -45,14 +45,24 @@ class UsuarioLocalizacaoSerializer(DocumentSerializer):
         fields = '__all__'
 
 
-class FilterLocalizacaoSerializer(serializers.Serializer):
-    filter_ano_do = serializers.BooleanField()
-    filter_ano_value = serializers.IntegerField(required=False)
-    filter_mes_do = serializers.BooleanField()
-    filter_mes_value = serializers.IntegerField(required=False)
-    filter_dia_do = serializers.BooleanField()
-    filter_dia_value = serializers.IntegerField(required=False)
-    filter_hora_do = serializers.BooleanField()
-    filter_hora_value = serializers.IntegerField(required=False)
-    filter_minute_do = serializers.BooleanField()
-    filter_minute_value = serializers.IntegerField(required=False)
+class SendLocalizacaoSerializer(Serializer):
+    ano = CharField()
+    mes = CharField()
+    dia = CharField()
+    hora = CharField()
+    minutos = CharField()
+    lat = CharField()
+    long = CharField()
+
+
+# class FilterLocalizacaoSerializer(Serializer):
+#     filter_ano_do = BooleanField()
+#     filter_ano_value = serializers.IntegerField(required=False)
+#     filter_mes_do = serializers.BooleanField()
+#     filter_mes_value = serializers.IntegerField(required=False)
+#     filter_dia_do = serializers.BooleanField()
+#     filter_dia_value = serializers.IntegerField(required=False)
+#     filter_hora_do = serializers.BooleanField()
+#     filter_hora_value = serializers.IntegerField(required=False)
+#     filter_minute_do = serializers.BooleanField()
+#     filter_minute_value = serializers.IntegerField(required=False)
