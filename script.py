@@ -24,7 +24,8 @@ DIA_LOCAL = '27'
 HORA_LOCAL = '19'
 MINUTOS_LOCAL = '5'
 
-LOCALIZACAO_LOCAL = Localizacao(minutos=MINUTOS_LOCAL, lat='lat11', long='long11')
+LAT_LOCAL = 'lat'
+LONG_LOCAL = 'long'
 
 ul1 = UsuarioLocalizacao(id_usuario=1)
 try:
@@ -33,7 +34,7 @@ except NotUniqueError as e:
     ul1 = UsuarioLocalizacao.objects.get(id_usuario=1)
     # print(e)
 
-ul1.add_location(ANO_LOCAL, MES_LOCAL, DIA_LOCAL, HORA_LOCAL, LOCALIZACAO_LOCAL)
+ul1.add_location(ANO_LOCAL, MES_LOCAL, DIA_LOCAL, HORA_LOCAL, MINUTOS_LOCAL, LAT_LOCAL, LONG_LOCAL)
 ul1.save()
 
 ul2 = UsuarioLocalizacao(id_usuario=2)
@@ -43,7 +44,7 @@ except NotUniqueError as e:
     ul2 = UsuarioLocalizacao.objects.get(id_usuario=2)
     # print(e)
 
-ul2.add_location(ANO_LOCAL, MES_LOCAL, DIA_LOCAL, HORA_LOCAL, LOCALIZACAO_LOCAL)
+ul2.add_location(ANO_LOCAL, MES_LOCAL, DIA_LOCAL, HORA_LOCAL, MINUTOS_LOCAL, LAT_LOCAL, LONG_LOCAL)
 ul2.save()
 
 familia = Familia(nome='Familia teste')

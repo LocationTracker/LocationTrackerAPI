@@ -74,26 +74,29 @@ class UsuarioLocalizacao(Document):
             return True
         return False
 
-    def _create_hora(self, hora, loc):
+    def _create_localizacao(self, minutos, lat, long):
+        return Localizacao(minutos=minutos, lat=lat, long=long)
+
+    def _create_hora(self, hora, minutos, lat, long):
         h = HoraLocalizacao(value=hora)
-        h.localizacoes[loc.minutos] = loc
+        h.localizacoes[minutos] = self._create_localizacao(minutos, lat, long)
         return h
 
-    def _create_dia(self, dia, hora, loc):
+    def _create_dia(self, dia, hora, minutos, lat, long):
         d = DiaLocalizacao(value=dia)
-        h = self._create_hora(hora, loc)
+        h = self._create_hora(hora, minutos, lat, long)
         d.horas[h.value] = h
         return d
 
-    def _create_mes(self, mes, dia, hora, loc):
+    def _create_mes(self, mes, dia, hora, minutos, lat, long):
         m = MesLocalizacao(value=mes)
-        d = self._create_dia(dia, hora, loc)
+        d = self._create_dia(dia, hora, minutos, lat, long)
         m.dias[d.value] = d
         return m
 
-    def _create_ano(self, ano, mes, dia, hora, loc):
+    def _create_ano(self, ano, mes, dia, hora, minutos, lat, long):
         a = AnoLocalizacao(value=ano)
-        m = self._create_mes(mes, dia, hora, loc)
+        m = self._create_mes(mes, dia, hora, minutos, lat, long)
         a.meses[m.value] = m
         return a
 
@@ -122,7 +125,7 @@ class UsuarioLocalizacao(Document):
             return self.anos[ano].meses[mes].dias[dia].horas[hora].localizacoes[minutos]
         return None
 
-    def add_location(self, ano, mes, dia, hora, loc):
+    def add_location(self, ano, mes, dia, hora, minutos, lat, long):
         if self._verify_ano(ano):
             print('has ano')
             if self._verify_mes(ano, mes):
@@ -131,16 +134,16 @@ class UsuarioLocalizacao(Document):
                     print('has dia')
                     if self._verify_hora(ano, mes, dia, hora):
                         print('has hora')
-                        self.anos[ano].meses[mes].dias[dia].horas[hora].localizacoes[loc.minutos] = loc
+                        self.anos[ano].meses[mes].dias[dia].horas[hora].localizacoes[minutos] = self._create_localizacao(minutos, lat, long)
                     else:
                         print('create hora')
-                        self.anos[ano].meses[mes].dias[dia].horas[hora] = self._create_hora(hora, loc)
+                        self.anos[ano].meses[mes].dias[dia].horas[hora] = self._create_hora(hora, minutos, lat, long)
                 else:
                     print('create dia')
-                    self.anos[ano].meses[mes].dias[dia] = self._create_dia(dia, hora, loc)
+                    self.anos[ano].meses[mes].dias[dia] = self._create_dia(dia, hora, minutos, lat, long)
             else:
                 print('create mes')
-                self.anos[ano].meses[mes] = self._create_mes(mes, dia, hora, loc)
+                self.anos[ano].meses[mes] = self._create_mes(mes, dia, hora, minutos, lat, long)
         else:
             print('create ano')
-            self.anos[ano] = self._create_ano(ano, mes, dia, hora, loc)
+            self.anos[ano] = self._create_ano(ano, mes, dia, hora, minutos, lat, long)
