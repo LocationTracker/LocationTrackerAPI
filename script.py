@@ -17,7 +17,7 @@ from datetime import date, datetime
 # for user in users:
 #     print(user)
 
-ANO_LOCAL = '2019'
+ANO_LOCAL = '2018'
 MES_LOCAL = '6'
 DIA_LOCAL = '27'
 

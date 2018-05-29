@@ -8,7 +8,7 @@ from .models import Familia, PerfilUsuario
 from location.models import UsuarioLocalizacao, Localizacao
 from location.serializers import UsuarioLocalizacaoSerializer, \
     AnoSerializer, MesSerializer, DiaSerializer, HoraSerializer, \
-    LocalizacaoSerializer, SendLocalizacaoSerializer
+    LocalizacaoSerializer, SendLocalizacaoSerializer, LastLocalizacaoSerializer
 
 
 class UsuarioViewSet(viewsets.ModelViewSet):
@@ -64,6 +64,17 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         usuario = self.get_object()
         usuario_locations = UsuarioLocalizacao.objects.get(id_usuario=usuario.id)
         serializer = UsuarioLocalizacaoSerializer(usuario_locations)
+        return Response(serializer.data)
+
+    @action(methods=['get'], detail=True, serializer_class=LastLocalizacaoSerializer)
+    def get_last_location(self, request, pk=None):
+        """
+        Retorna a última localização de um usuário existente
+        """
+        usuario = self.get_object()
+        u_loc = UsuarioLocalizacao.objects.get(id_usuario=usuario.id)
+        last = u_loc.get_last_location()
+        serializer = LastLocalizacaoSerializer(last)
         return Response(serializer.data)
 
     # @action(methods=['post'], detail=True, serializer_class=FilterLocalizacaoSerializer)
