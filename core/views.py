@@ -43,23 +43,23 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         serializer = UsuarioSerializer(membros, many=True)
         return Response(serializer.data)
 
-    # @action(methods=['get'], detail=True, serializer_class=LocalizacaoSerializer)
-    # def get_family_locations(self, request, pk=None):
-    #     """
-    #     Retorna as localizações do membros familiares de um usuário existente
-    #     """
-    #     usuario = self.get_object()
-    #     membros = PerfilUsuario.objects.filter(familia=usuario.familia)
-    #     locations = Localizacao.objects
-    #     for membro in membros:
-    #         locations.filter(id_usuario=membro.id)
-    #     serializer = LocalizacaoSerializer(locations, many=True)
-    #     return Response(serializer.data)
+    @action(methods=['get'], detail=True, serializer_class=UsuarioLocalizacaoSerializer)
+    def get_family_locations(self, request, pk=None):
+        """
+        Retorna as TODAS localizações do membros familiares de um usuário existente
+        """
+        usuario = self.get_object()
+        membros = PerfilUsuario.objects.filter(familia=usuario.familia)
+        locations = UsuarioLocalizacao.objects
+        for membro in membros:
+            locations.filter(id_usuario=membro.id)
+        serializer = UsuarioLocalizacaoSerializer(locations, many=True)
+        return Response(serializer.data)
 
     @action(methods=['get'], detail=True, serializer_class=UsuarioLocalizacaoSerializer)
     def get_locations(self, request, pk=None):
         """
-        Retorna a lista de localizações de um usuário existente
+        Retorna TODA a lista de localizações de um usuário existente
         """
         usuario = self.get_object()
         usuario_locations = UsuarioLocalizacao.objects.get(id_usuario=usuario.id)
