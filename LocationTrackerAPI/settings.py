@@ -106,23 +106,7 @@ DATABASES = {
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_HOST,
         'PORT': DB_PORT,
-    },
-    'location_db': {
-            'ENGINE': 'djongo',
-            'NAME': MONGO_NAME
-            # 'HOST': MONGO_HOST,
-            # 'PORT': MONGO_PORT,
-            # 'USER': MONGO_USER,
-            # 'PASSWORD': MONGO_PASSWORD
-            # 'AUTH_SOURCE': 'admin',
-            # 'AUTH_MECHANISM': 'SCRAM-SHA-1',
-            # # 'REPLICASET': 'replicaset',
-            # 'SSL': True,
-            # ssl_cert_reqs=
-            # 'SSL_CERTFILE': ssl.CERT_NONE
-            # 'SSL_CA_CERTS': 'ssl_ca_certs',
-            # 'READ_PREFERENCE': 'read_preference'
-        }
+    }
 }
 
 connect(MONGO_NAME)
