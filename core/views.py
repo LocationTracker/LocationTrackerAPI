@@ -9,27 +9,6 @@ from location.models import UsuarioLocalizacao
 from location.serializers import UsuarioLocalizacaoSerializer, AnoSerializer, MesSerializer, DiaSerializer, HoraSerializer, LocalizacaoSerializer, FilterLocalizacaoSerializer
 
 
-class FamiliaViewSet(viewsets.ModelViewSet):
-    """
-    retrieve:
-        Retorna uma família
-    list:
-        Retorna todas as famílias
-    create:
-        Cria uma nova família
-    delete:
-        Remove uma família existente
-    partial_update:
-        Atualiza um ou mais campos de uma família existente
-    update:
-        Atualiza uma família
-    """
-    queryset = Familia.objects.all()
-    serializer_class = FamiliaSerializer
-    # permission_classes = [
-    #     IsAuthenticated,
-    # ]
-    http_method_names = ['get', 'post', 'put', 'patch']
 
 
 class UsuarioViewSet(viewsets.ModelViewSet):
