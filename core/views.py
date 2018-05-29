@@ -83,12 +83,12 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         Registra uma nova localização de um usuário existente
         """
         usuario = self.get_object()
-        request.data['id_usuario'] = pk
         serializer = SendLocalizacaoSerializer(data=request.data)
         if serializer.is_valid():
             u_loc = UsuarioLocalizacao.objects.get(id_usuario=usuario.id)
-            # u_loc
-            serializer.save()
+            assert isinstance(u_loc, UsuarioLocalizacao)
+            u_loc.add_location_data(request.data)
+            u_loc.save()
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

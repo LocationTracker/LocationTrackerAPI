@@ -147,3 +147,6 @@ class UsuarioLocalizacao(Document):
         else:
             print('create ano')
             self.anos[ano] = self._create_ano(ano, mes, dia, hora, minutos, lat, long)
+
+    def add_location_data(self, data):
+        self.add_location(data['ano'], data['mes'], data['dia'], data['hora'], data['minutos'], data['lat'], data['long'])
