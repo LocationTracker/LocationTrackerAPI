@@ -1,10 +1,9 @@
 from django.urls import path, include
 from rest_framework import routers
 from rest_framework_swagger.views import get_swagger_view
-from core.views import FamiliaViewSet, UsuarioViewSet
+from core.views import UsuarioViewSet
 
 router = routers.DefaultRouter()
-# router.register('familias', FamiliaViewSet)
 router.register('usuarios', UsuarioViewSet)
 
 schema_view = get_swagger_view(title='LocationTracker API')

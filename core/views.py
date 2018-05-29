@@ -5,31 +5,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import FamiliaSerializer, UsuarioSerializer
 from .models import Familia, PerfilUsuario
-from location.models import UsuarioLocalizacao
-from location.serializers import UsuarioLocalizacaoSerializer, FilterLocalizacaoSerializer
-
-
-class FamiliaViewSet(viewsets.ModelViewSet):
-    """
-    retrieve:
-        Retorna uma família
-    list:
-        Retorna todas as famílias
-    create:
-        Cria uma nova família
-    delete:
-        Remove uma família existente
-    partial_update:
-        Atualiza um ou mais campos de uma família existente
-    update:
-        Atualiza uma família
-    """
-    queryset = Familia.objects.all()
-    serializer_class = FamiliaSerializer
-    # permission_classes = [
-    #     IsAuthenticated,
-    # ]
-    http_method_names = ['get', 'post', 'put', 'patch']
+from location.models import UsuarioLocalizacao, Localizacao
+from location.serializers import UsuarioLocalizacaoSerializer, \
+    AnoSerializer, MesSerializer, DiaSerializer, HoraSerializer, \
+    LocalizacaoSerializer, SendLocalizacaoSerializer, LastLocalizacaoSerializer
 
 
 class UsuarioViewSet(viewsets.ModelViewSet):
@@ -64,49 +43,79 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         serializer = UsuarioSerializer(membros, many=True)
         return Response(serializer.data)
 
-    # @action(methods=['get'], detail=True, serializer_class=LocalizacaoSerializer)
-    # def get_family_locations(self, request, pk=None):
-    #     """
-    #     Retorna as localizações do membros familiares de um usuário existente
-    #     """
-    #     usuario = self.get_object()
-    #     membros = PerfilUsuario.objects.filter(familia=usuario.familia)
-    #     locations = Localizacao.objects
-    #     for membro in membros:
-    #         locations.filter(id_usuario=membro.id)
-    #     serializer = LocalizacaoSerializer(locations, many=True)
-    #     return Response(serializer.data)
+    @action(methods=['get'], detail=True, serializer_class=UsuarioLocalizacaoSerializer)
+    def get_family_locations(self, request, pk=None):
+        """
+        Retorna as TODAS localizações do membros familiares de um usuário existente
+        """
+        usuario = self.get_object()
+        membros = PerfilUsuario.objects.filter(familia=usuario.familia)
+        locations = UsuarioLocalizacao.objects
+        for membro in membros:
+            locations.filter(id_usuario=membro.id)
+        serializer = UsuarioLocalizacaoSerializer(locations, many=True)
+        return Response(serializer.data)
+
+    @action(methods=['get'], detail=True, serializer_class=LastLocalizacaoSerializer)
+    def get_family_last_location(self, request, pk=None):
+        """
+        Retorna a última localização dos membros familiares de um usuário existente
+        """
+        usuario = self.get_object()
+        membros = PerfilUsuario.objects.filter(familia=usuario.familia)
+        last_locations = []
+        us_loc = UsuarioLocalizacao.objects
+        for membro in membros:
+            us_loc.filter(id_usuario=membro.id)
+        for u_loc in us_loc:
+            last_locations.append(u_loc.get_last_location())
+        serializer = LastLocalizacaoSerializer(last_locations, many=True)
+        return Response(serializer.data)
 
     @action(methods=['get'], detail=True, serializer_class=UsuarioLocalizacaoSerializer)
     def get_locations(self, request, pk=None):
         """
-        Retorna a lista de localizações de um usuário existente
+        Retorna TODA a lista de localizações de um usuário existente
         """
         usuario = self.get_object()
         usuario_locations = UsuarioLocalizacao.objects.get(id_usuario=usuario.id)
         serializer = UsuarioLocalizacaoSerializer(usuario_locations)
         return Response(serializer.data)
 
-    @action(methods=['post'], detail=True, serializer_class=FilterLocalizacaoSerializer)
-    def get_locations(self, request, pk=None):
+    @action(methods=['get'], detail=True, serializer_class=LastLocalizacaoSerializer)
+    def get_last_location(self, request, pk=None):
         """
-        Retorna a lista de localizações de um usuário existente de acordo com os filtros passados
+        Retorna a última localização de um usuário existente
         """
         usuario = self.get_object()
-        usuario_locations = UsuarioLocalizacao.objects.get(id_usuario=usuario.id)
-        # @TODO FAZER REMOCAO DE ITENS
-        serializer = UsuarioLocalizacaoSerializer(usuario_locations)
+        u_loc = UsuarioLocalizacao.objects.get(id_usuario=usuario.id)
+        last = u_loc.get_last_location()
+        serializer = LastLocalizacaoSerializer(last)
         return Response(serializer.data)
 
-    # @action(methods=['post'], detail=True, serializer_class=LocalizacaoSerializerPost)
-    # def send_location(self, request, pk=None):
+    # @action(methods=['post'], detail=True, serializer_class=FilterLocalizacaoSerializer)
+    # def filter_locations(self, request, pk=None):
     #     """
-    #     Registra uma nova localização de um usuário existente
+    #     Retorna a lista de localizações de um usuário existente de acordo com os filtros passados
     #     """
-    #     request.data['id_usuario'] = pk
-    #     serializer = LocalizacaoSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data)
-    #     else:
-    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #     usuario = self.get_object()
+    #     usuario_locations = UsuarioLocalizacao.objects.get(id_usuario=usuario.id)
+    #     # @TODO FAZER REMOCAO DE ITENS
+    #     serializer = UsuarioLocalizacaoSerializer(usuario_locations)
+    #     return Response(serializer.data)
+
+    @action(methods=['post'], detail=True, serializer_class=SendLocalizacaoSerializer)
+    def send_location(self, request, pk=None):
+        """
+        Registra uma nova localização de um usuário existente
+        """
+        usuario = self.get_object()
+        serializer = SendLocalizacaoSerializer(data=request.data)
+        if serializer.is_valid():
+            u_loc = UsuarioLocalizacao.objects.get(id_usuario=usuario.id)
+            assert isinstance(u_loc, UsuarioLocalizacao)
+            u_loc.add_location_data(request.data)
+            u_loc.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

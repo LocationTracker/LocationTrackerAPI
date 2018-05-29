@@ -1,6 +1,7 @@
 from django.db.models import Model, CharField, ImageField, OneToOneField, ForeignKey, PROTECT, SET_NULL, CASCADE
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from location.models import UsuarioLocalizacao
 from .utils import get_usuario_upload_path
 
 
@@ -47,4 +48,6 @@ def create_usuario(sender, **kwargs):
     if kwargs["created"]:
         usuario = PerfilUsuario(user=user)
         usuario.save()
+        u_loc = UsuarioLocalizacao(id_usuario=user.id)
+        u_loc.save()
 post_save.connect(create_usuario, sender=User)

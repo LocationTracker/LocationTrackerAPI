@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 from .config import DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD,\
-    MONGO_HOST, MONGO_PORT, MONGO_NAME, MONGO_USER, MONGO_PASSWORD
+    MONGO_HOST, MONGO_PORT, MONGO_NAME, MONGO_USER
+from mongoengine import connect
 
 
 SETTINGS_DIR = os.path.dirname(__file__)
@@ -105,24 +106,10 @@ DATABASES = {
         'PASSWORD': DB_PASSWORD,
         'HOST': DB_HOST,
         'PORT': DB_PORT,
-    },
-    'location_db': {
-            'ENGINE': 'djongo',
-            'NAME': MONGO_NAME
-            # 'HOST': MONGO_HOST,
-            # 'PORT': MONGO_PORT,
-            # 'USER': MONGO_USER,
-            # 'PASSWORD': MONGO_PASSWORD
-            # 'AUTH_SOURCE': 'admin',
-            # 'AUTH_MECHANISM': 'SCRAM-SHA-1',
-            # # 'REPLICASET': 'replicaset',
-            # 'SSL': True,
-            # ssl_cert_reqs=
-            # 'SSL_CERTFILE': ssl.CERT_NONE
-            # 'SSL_CA_CERTS': 'ssl_ca_certs',
-            # 'READ_PREFERENCE': 'read_preference'
-        }
+    }
 }
+
+connect(MONGO_NAME)
 
 DATABASE_ROUTERS = ['location.routers.LocationRouter']
 
