@@ -18,11 +18,11 @@ from datetime import date, datetime
 #     print(user)
 
 ANO_LOCAL = '2018'
-MES_LOCAL = '6'
-DIA_LOCAL = '27'
+MES_LOCAL = '05'
+DIA_LOCAL = '29'
 
 HORA_LOCAL = '19'
-MINUTOS_LOCAL = '5'
+MINUTOS_LOCAL = '05'
 
 LAT_LOCAL = 'lat'
 LONG_LOCAL = 'long'
@@ -35,6 +35,14 @@ except NotUniqueError as e:
     # print(e)
 
 ul1.add_location(ANO_LOCAL, MES_LOCAL, DIA_LOCAL, HORA_LOCAL, MINUTOS_LOCAL, LAT_LOCAL, LONG_LOCAL)
+ul1.add_location('2018', '03', '15', '18', '05', LAT_LOCAL, LONG_LOCAL)
+ul1.add_location('2018', '03', '15', '18', '10', LAT_LOCAL, LONG_LOCAL)
+ul1.add_location('2018', '03', '15', '19', '05', LAT_LOCAL, LONG_LOCAL)
+ul1.add_location('2018', '03', '15', '19', '10', LAT_LOCAL, LONG_LOCAL)
+ul1.add_location('2018', '03', '16', '19', '05', LAT_LOCAL, LONG_LOCAL)
+ul1.add_location('2018', '03', '16', '19', '10', LAT_LOCAL, LONG_LOCAL)
+ul1.add_location('2018', '04', '16', '19', '05', LAT_LOCAL, LONG_LOCAL)
+ul1.add_location('2018', '04', '16', '19', '10', LAT_LOCAL, LONG_LOCAL)
 ul1.save()
 
 ul2 = UsuarioLocalizacao(id_usuario=2)
@@ -45,6 +53,14 @@ except NotUniqueError as e:
     # print(e)
 
 ul2.add_location(ANO_LOCAL, MES_LOCAL, DIA_LOCAL, HORA_LOCAL, MINUTOS_LOCAL, LAT_LOCAL, LONG_LOCAL)
+ul1.add_location('2018', '03', '15', '18', '05', LAT_LOCAL, LONG_LOCAL)
+ul1.add_location('2018', '03', '15', '18', '10', LAT_LOCAL, LONG_LOCAL)
+ul1.add_location('2018', '03', '15', '19', '05', LAT_LOCAL, LONG_LOCAL)
+ul1.add_location('2018', '03', '15', '19', '10', LAT_LOCAL, LONG_LOCAL)
+ul1.add_location('2018', '03', '16', '19', '05', LAT_LOCAL, LONG_LOCAL)
+ul1.add_location('2018', '03', '16', '19', '10', LAT_LOCAL, LONG_LOCAL)
+ul1.add_location('2018', '04', '16', '19', '05', LAT_LOCAL, LONG_LOCAL)
+ul1.add_location('2018', '04', '16', '19', '10', LAT_LOCAL, LONG_LOCAL)
 ul2.save()
 
 familia = Familia(nome='Familia teste')

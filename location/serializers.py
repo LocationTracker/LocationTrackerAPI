@@ -56,11 +56,11 @@ class LastLocalizacaoSerializer(Serializer):
     long = CharField()
 
 class SendLocalizacaoSerializer(Serializer):
-    ano = CharField()
-    mes = CharField()
-    dia = CharField()
-    hora = CharField()
-    minutos = CharField()
+    ano = CharField(min_length=4, max_length=4)
+    mes = CharField(min_length=2, max_length=2)
+    dia = CharField(min_length=2, max_length=2)
+    hora = CharField(min_length=2, max_length=2)
+    minutos = CharField(min_length=2, max_length=2)
     lat = CharField()
     long = CharField()
 
