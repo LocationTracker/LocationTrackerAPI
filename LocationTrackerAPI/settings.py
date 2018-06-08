@@ -110,9 +110,6 @@ DATABASES = {
 }
 
 connect(MONGO_NAME)
-
-DATABASE_ROUTERS = ['location.routers.LocationRouter']
-
 # connect('LocationTracker')
 
 
