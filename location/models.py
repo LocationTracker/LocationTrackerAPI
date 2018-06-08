@@ -1,4 +1,15 @@
-from mongoengine import Document, EmbeddedDocument, StringField, IntField, EmbeddedDocumentField, EmbeddedDocumentListField, MapField
+from mongoengine import Document, EmbeddedDocument, StringField, IntField, DateTimeField, EmbeddedDocumentField, EmbeddedDocumentListField, MapField
+from datetime import datetime
+
+
+class UltimaLocalizacao(EmbeddedDocument):
+    id_usuario = IntField()
+    data = DateTimeField()
+    lat = StringField()
+    long = StringField()
+
+    def __str__(self):
+        return "Localizacao de {} em {} - {} e {}".format(self.id_usuario, self.data, self.lat, self.long)
 
 
 class Localizacao(EmbeddedDocument):
@@ -45,6 +56,7 @@ class AnoLocalizacao(EmbeddedDocument):
 class UsuarioLocalizacao(Document):
     id_usuario = IntField(unique=True)
     anos = MapField(EmbeddedDocumentField(AnoLocalizacao))
+    ultima_localizacao = EmbeddedDocumentField(UltimaLocalizacao)
 
     def __str__(self):
         return "Localizações de {}".format(self.id_usuario)
