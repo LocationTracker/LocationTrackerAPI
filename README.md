@@ -31,6 +31,7 @@ Instale atraves do `sudo apt-get install postgresql`
 - `sudo systemctl start postgresql`
 - `sudo systemctl stop postgresql`
 - `sudo systemctl restart postgresql`
+    - `sudo /etc/init.d/postgresql restart`
 - `sudo systemctl status postgresql`
 
 ## MongoDB

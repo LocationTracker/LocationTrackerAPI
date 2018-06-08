@@ -4,17 +4,17 @@ MONGO_PORT = ""
 
 MONGO_NAME = "LocationTracker"
 
-MONGO_USER = "postgres"
+MONGO_USER = "user"
 MONGO_PASSWORD = "root"
 
 # POSTGRESQL
 DB_HOST = "localhost"
 DB_PORT = ""
 
-DB_NAME = "DB_NAME"
+DB_NAME = "LocationTracker"
 
-DB_USER = "DB_USER"
-DB_PASSWORD = ""
+DB_USER = "user"
+DB_PASSWORD = "root"
 
 # EMAIL
 CFG_EMAIL_HOST = 'smtp.sendgrid.net'
