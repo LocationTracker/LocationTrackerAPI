@@ -62,29 +62,39 @@ class UsuarioLocalizacao(Document):
         return "Localizações de {}".format(self.id_usuario)
 
     def _verify_ano(self, ano):
-        if ano in self.anos:
+        try:
+            assert self.anos[ano]
             return True
-        return False
+        except KeyError:
+            return False
 
     def _verify_mes(self, ano, mes):
-        if mes in self.anos[ano].meses:
+        try:
+            assert self.anos[ano].meses[mes]
             return True
-        return False
+        except KeyError:
+            return False
 
     def _verify_dia(self, ano, mes, dia):
-        if dia in self.anos[ano].meses[mes].dias:
+        try:
+            assert self.anos[ano].meses[mes].dias[dia]
             return True
-        return False
+        except KeyError:
+            return False
 
     def _verify_hora(self, ano, mes, dia, hora):
-        if hora in self.anos[ano].meses[mes].dias[dia].horas:
+        try:
+            assert self.anos[ano].meses[mes].dias[dia].horas[hora]
             return True
-        return False
+        except KeyError:
+            return False
 
     def _verify_minutos(self, ano, mes, dia, hora, minutos):
-        if minutos in self.anos[ano].meses[mes].dias[dia].horas[hora].localizacoes[minutos]:
+        try:
+            assert self.anos[ano].meses[mes].dias[dia].horas[hora].localizacoes[minutos]
             return True
-        return False
+        except KeyError:
+            return False
 
     def _create_localizacao(self, minutos, lat, long):
         return Localizacao(minutos=minutos, lat=lat, long=long)
