@@ -147,63 +147,12 @@ class UsuarioLocalizacao(Document):
             return self.anos[ano].meses[mes].dias[dia].horas[hora].localizacoes[minutos]
         return None
 
-    def get_last_year(self):
-        ano_recente = None
-        for key, ano in self.anos.items():
-            if ano_recente is None or ano_recente.value <= ano.value:
-                # print('ano mais recente {}'.format(ano))
-                ano_recente = ano
-        data = {'resp': {'ano': ano_recente.value}}
-        return {'recente': ano_recente, 'resp': data['resp']}
-
-    def get_last_month(self):
-        data = self.get_last_year()
-        ano = data['recente']
-        mes_recente = None
-        for key, mes in ano.meses.items():
-            if mes_recente is None or mes_recente.value <= mes.value:
-                # print('Mes mais recente {}'.format(mes))
-                mes_recente = mes
-        data['resp']['mes'] = mes_recente.value
-        return {'recente': mes_recente, 'resp': data['resp']}
-
-    def get_last_day(self):
-        data = self.get_last_month()
-        mes = data['recente']
-        dia_recente = None
-        for key, dia in mes.dias.items():
-            if dia_recente is None or dia_recente.value <= dia.value:
-                # print('Dia mais recente {}'.format(dia))
-                dia_recente = dia
-        data['resp']['dia'] = dia_recente.value
-        return {'recente': dia_recente, 'resp': data['resp']}
-
-    def get_last_hour(self):
-        data = self.get_last_day()
-        dia = data['recente']
-        hora_recente = None
-        for key, hora in dia.horas.items():
-            if hora_recente is None or hora_recente.value <= hora.value:
-                # print('Hora mais recente {}'.format(hora))
-                hora_recente = hora
-        data['resp']['hora'] = hora_recente.value
-        return {'recente': hora_recente, 'resp': data['resp']}
-
-    def get_last_location(self):
-        data = self.get_last_hour()
-        hora = data['recente']
-        localizacao_recente = None
-        for key, localizacao in hora.localizacoes.items():
-            if localizacao_recente is None or localizacao_recente.minutos <= localizacao.minutos:
-                # print('Hora mais recente {}'.format(hora))
-                localizacao_recente = localizacao
-        data['resp']['minutos'] = localizacao_recente.minutos
-        data['resp']['lat'] = localizacao_recente.lat
-        data['resp']['long'] = localizacao_recente.long
-        data['resp']['id_usuario'] = self.id_usuario
-        return data['resp']
+    def update_last_location(self, ano, mes, dia, hora, minutos, lat, long):
+        data = datetime(int(ano), int(mes), int(dia), int(hora), int(minutos))
+        self.ultima_localizacao = UltimaLocalizacao(id_usuario=self.id_usuario, data=data, lat=lat, long=long)
 
     def add_location(self, ano, mes, dia, hora, minutos, lat, long):
+        self.update_last_location(ano, mes, dia, hora, minutos, lat, long)
         if self._verify_ano(ano):
             # print('has ano')
             if self._verify_mes(ano, mes):
