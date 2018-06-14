@@ -8,7 +8,7 @@ from .models import Familia, PerfilUsuario
 from location.models import UsuarioLocalizacao, Localizacao
 from location.serializers import UsuarioLocalizacaoSerializer, \
     AnoSerializer, MesSerializer, DiaSerializer, HoraSerializer, \
-    LocalizacaoSerializer, SendLocalizacaoSerializer, LastLocalizacaoSerializer
+    LocalizacaoSerializer, SendLocalizacaoSerializer, UltimaLocalizacaoSerializer
 
 
 class UsuarioViewSet(viewsets.ModelViewSet):
@@ -56,7 +56,7 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         serializer = UsuarioLocalizacaoSerializer(locations, many=True)
         return Response(serializer.data)
 
-    @action(methods=['get'], detail=True, serializer_class=LastLocalizacaoSerializer)
+    @action(methods=['get'], detail=True, serializer_class=UltimaLocalizacaoSerializer)
     def get_family_last_location(self, request, pk=None):
         """
         Retorna a última localização dos membros familiares de um usuário existente
@@ -68,8 +68,8 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         for membro in membros:
             us_loc.filter(id_usuario=membro.id)
         for u_loc in us_loc:
-            last_locations.append(u_loc.get_last_location())
-        serializer = LastLocalizacaoSerializer(last_locations, many=True)
+            last_locations.append(u_loc.ultima_localizacao)
+        serializer = UltimaLocalizacaoSerializer(last_locations, many=True)
         return Response(serializer.data)
 
     @action(methods=['get'], detail=True, serializer_class=UsuarioLocalizacaoSerializer)
@@ -82,15 +82,14 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         serializer = UsuarioLocalizacaoSerializer(usuario_locations)
         return Response(serializer.data)
 
-    @action(methods=['get'], detail=True, serializer_class=LastLocalizacaoSerializer)
+    @action(methods=['get'], detail=True, serializer_class=UltimaLocalizacaoSerializer)
     def get_last_location(self, request, pk=None):
         """
         Retorna a última localização de um usuário existente
         """
         usuario = self.get_object()
         u_loc = UsuarioLocalizacao.objects.get(id_usuario=usuario.id)
-        last = u_loc.get_last_location()
-        serializer = LastLocalizacaoSerializer(last)
+        serializer = UltimaLocalizacaoSerializer(u_loc.ultima_localizacao)
         return Response(serializer.data)
 
     # @action(methods=['post'], detail=True, serializer_class=FilterLocalizacaoSerializer)
@@ -116,6 +115,6 @@ class UsuarioViewSet(viewsets.ModelViewSet):
             assert isinstance(u_loc, UsuarioLocalizacao)
             u_loc.add_location_data(request.data)
             u_loc.save()
-            return Response(serializer.data)
+            return Response(UltimaLocalizacaoSerializer(u_loc.ultima_localizacao).data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

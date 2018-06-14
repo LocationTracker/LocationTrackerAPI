@@ -1,7 +1,14 @@
 from rest_framework.serializers import Serializer, CharField, IntegerField
 from rest_framework_mongoengine.serializers import EmbeddedDocumentSerializer, DocumentSerializer
 from rest_framework_mongoengine.fields import DictField
-from .models import UsuarioLocalizacao, AnoLocalizacao, MesLocalizacao, DiaLocalizacao, HoraLocalizacao, Localizacao
+from .models import UsuarioLocalizacao, AnoLocalizacao, MesLocalizacao, DiaLocalizacao, \
+    HoraLocalizacao, Localizacao, UltimaLocalizacao
+
+
+class UltimaLocalizacaoSerializer(EmbeddedDocumentSerializer):
+    class Meta:
+        model = UltimaLocalizacao
+        fields = '__all__'
 
 
 class LocalizacaoSerializer(EmbeddedDocumentSerializer):
@@ -44,16 +51,6 @@ class UsuarioLocalizacaoSerializer(DocumentSerializer):
         model = UsuarioLocalizacao
         fields = '__all__'
 
-
-class LastLocalizacaoSerializer(Serializer):
-    id_usuario = IntegerField()
-    ano = CharField()
-    mes = CharField()
-    dia = CharField()
-    hora = CharField()
-    minutos = CharField()
-    lat = CharField()
-    long = CharField()
 
 class SendLocalizacaoSerializer(Serializer):
     ano = CharField(min_length=4, max_length=4)
