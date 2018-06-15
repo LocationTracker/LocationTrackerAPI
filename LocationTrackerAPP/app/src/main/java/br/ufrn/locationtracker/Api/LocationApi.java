@@ -41,9 +41,20 @@ public class LocationApi {
             e.printStackTrace();
         }
 
+        Integer mes =cal.get(Calendar.MONTH);
+        String sMes;
+        mes++;
+        if(mes  < 10){
+            sMes = "0"+Integer.toString(mes);
+        }
+        else {
+            sMes = Integer.toString(mes);
+        }
+
+
         RequestParams params = new RequestParams();
         params.put("ano",Integer.toString( cal.get(Calendar.YEAR)));
-        params.put("mes",Integer.toString( cal.get(Calendar.MONTH)+1));
+        params.put("mes",sMes);
         params.put("dia", Integer.toString( cal.get(Calendar.DAY_OF_MONTH)));
         params.put("hora",hora.format(dateCelular).toString());
         params.put("minutos",minuto.format(dateCelular).toString());

@@ -10,7 +10,7 @@ import com.loopj.android.http.SyncHttpClient;
 
 public class WebClient {
 
-    private static final String BASE_URL = "http://192.168.1.14:8000/api/";
+    private static final String BASE_URL = "http://192.168.43.195:8000/api/";
     //private static final String BASE_URL = "http://localhost:3137/api/";
 
     private static AsyncHttpClient client;
