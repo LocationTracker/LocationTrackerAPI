@@ -1,0 +1,7 @@
+5f14dbe7de217848f9eb4618e5ab715b3a11ed42
+Token 5f14dbe7de217848f9eb4618e5ab715b3a11ed42
+
+curl -X GET "http://127.0.0.1:8000/api/router/usuarios/1/" -H  "accept: application/json" -H 'Authorization: Token 5f14dbe7de217848f9eb4618e5ab715b3a11ed42'
+
+curl -X GET "http://127.0.0.1:8000/api/router/usuarios/1/get_last_location/" -H  "accept: application/json" -H 'Authorization: Token 5f14dbe7de217848f9eb4618e5ab715b3a11ed42'
+
