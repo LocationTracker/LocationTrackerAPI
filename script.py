@@ -48,7 +48,7 @@ rodrigo.perfil.add_location('2018', '05', '29', '19', '10', 'lat', 'long')
 rodrigo.perfil.add_location('2018', '06', '21', '23', '05', 'lat', 'long')
 
 wesley = User(username='wreuel', email='wreuel@gmail.com',
-                password='pbkdf2_sha256$100000$qLFj32fUzB19$IvReZO0pOWCtsxYMk4j/0yUKqvkIHBzqGjpXHPhHzp8=',
+                password='pbkdf2_sha256$100000$7lSwbqrzEtVE$MZQaFjFVC6LFSyuecwo4FwlNej3+H0V2oDB+QYmJYyo=',
                 is_staff=True, is_superuser=True)
 try:
     wesley.save()
