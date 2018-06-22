@@ -1,6 +1,8 @@
-from django.db.models import Model, CharField, ImageField, OneToOneField, ForeignKey, PROTECT, SET_NULL, CASCADE
+from django.db.models import Model, CharField, ImageField, OneToOneField, ForeignKey, SET_NULL, CASCADE
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
 from location.models import UsuarioLocalizacao
 from .utils import get_usuario_upload_path
 
@@ -57,11 +59,11 @@ class PerfilUsuario(Model):
         verbose_name_plural = 'perfis usuários'
 
 
-def create_usuario(sender, **kwargs):
-    user = kwargs["instance"]
-    if kwargs["created"]:
-        usuario = PerfilUsuario(user=user)
+@receiver(post_save, sender=User)
+def create_usuario(sender, instance=None, created=False, **kwargs):
+    if created:
+        usuario = PerfilUsuario(user=instance)
         usuario.save()
-        u_loc = UsuarioLocalizacao(id_usuario=user.id)
+        u_loc = UsuarioLocalizacao(id_usuario=instance.id)
         u_loc.save()
-post_save.connect(create_usuario, sender=User)
+        Token.objects.create(user=instance)
