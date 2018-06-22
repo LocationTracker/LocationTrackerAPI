@@ -38,6 +38,15 @@ class PerfilUsuario(Model):
 
         super(PerfilUsuario, self).save(*args, **kwargs)
 
+    @property
+    def location(self):
+        return UsuarioLocalizacao.objects.get(id_usuario=self.user.id)
+
+    def add_location(self, ano, mes, dia, hora, minuto, lat, long):
+        loc = self.location
+        loc.add_location(ano, mes, dia, hora, minuto, lat, long)
+        loc.save()
+
     class Meta:
         verbose_name = 'perfil usuário'
         verbose_name_plural = 'perfis usuários'
