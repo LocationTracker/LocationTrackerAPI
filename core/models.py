@@ -42,9 +42,14 @@ class PerfilUsuario(Model):
     def location(self):
         return UsuarioLocalizacao.objects.get(id_usuario=self.user.id)
 
-    def add_location(self, ano, mes, dia, hora, minuto, lat, long):
+    def add_location(self, ano, mes, dia, hora, minutos, lat, long):
         loc = self.location
-        loc.add_location(ano, mes, dia, hora, minuto, lat, long)
+        loc.add_location(ano, mes, dia, hora, minutos, lat, long)
+        loc.save()
+
+    def add_location_json(self, json):
+        loc = self.location
+        loc.add_location_json(json)
         loc.save()
 
     class Meta:
