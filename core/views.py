@@ -1,14 +1,12 @@
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from .serializers import FamiliaSerializer, UsuarioSerializer
-from .models import Familia, PerfilUsuario
-from location.models import UsuarioLocalizacao, Localizacao
+from .serializers import UsuarioSerializer
+from .models import PerfilUsuario
 from location.serializers import UsuarioLocalizacaoSerializer, \
-    AnoSerializer, MesSerializer, DiaSerializer, HoraSerializer, \
-    LocalizacaoSerializer, SendLocalizacaoSerializer, UltimaLocalizacaoSerializer
+    SendLocalizacaoSerializer, UltimaLocalizacaoSerializer
 
 
 class UsuarioViewSet(viewsets.ModelViewSet):
@@ -26,9 +24,8 @@ class UsuarioViewSet(viewsets.ModelViewSet):
     update:
         Atualiza um usuário
     """
-    # permission_classes = [
-    #     IsAuthenticated,
-    # ]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = PerfilUsuario.objects.all()
     serializer_class = UsuarioSerializer
     http_method_names = ['get', 'post', 'put', 'patch']
