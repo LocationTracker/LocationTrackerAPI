@@ -30,22 +30,22 @@ class UsuarioViewSet(viewsets.ModelViewSet):
     serializer_class = UsuarioSerializer
     http_method_names = ['get', 'post', 'put', 'patch']
 
-    @action(methods=['get'], detail=True)
-    def get_family_members(self, request, pk=None):
+    @action(detail=False)
+    def get_family_members(self, request):
         """
         Retorna os membros familiares de um usuário existente
         """
-        usuario = self.get_object()
+        usuario = request.auth.user.perfil
         membros = PerfilUsuario.objects.filter(familia=usuario.familia)
         serializer = UsuarioSerializer(membros, many=True)
         return Response(serializer.data)
 
-    @action(methods=['get'], detail=True, serializer_class=UsuarioLocalizacaoSerializer)
-    def get_family_locations(self, request, pk=None):
+    @action(methods=['get'], detail=False, serializer_class=UsuarioLocalizacaoSerializer)
+    def get_family_locations(self, request):
         """
         Retorna as TODAS localizações do membros familiares de um usuário existente
         """
-        usuario = self.get_object()
+        usuario = request.auth.user.perfil
         membros = PerfilUsuario.objects.filter(familia=usuario.familia)
         locations = []
         for membro in membros:
@@ -53,12 +53,12 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         serializer = UsuarioLocalizacaoSerializer(locations, many=True)
         return Response(serializer.data)
 
-    @action(methods=['get'], detail=True, serializer_class=UltimaLocalizacaoSerializer)
-    def get_family_last_location(self, request, pk=None):
+    @action(methods=['get'], detail=False, serializer_class=UltimaLocalizacaoSerializer)
+    def get_family_last_location(self, request):
         """
         Retorna a última localização dos membros familiares de um usuário existente
         """
-        usuario = self.get_object()
+        usuario = request.auth.user.perfil
         membros = PerfilUsuario.objects.filter(familia=usuario.familia)
         locations = []
         for membro in membros:
@@ -67,21 +67,21 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         serializer = UltimaLocalizacaoSerializer(locations, many=True)
         return Response(serializer.data)
 
-    @action(methods=['get'], detail=True, serializer_class=UsuarioLocalizacaoSerializer)
-    def get_locations(self, request, pk=None):
+    @action(methods=['get'], detail=False, serializer_class=UsuarioLocalizacaoSerializer)
+    def get_locations(self, request):
         """
         Retorna TODA a lista de localizações de um usuário existente
         """
-        usuario = self.get_object()
+        usuario = request.auth.user.perfil
         serializer = UsuarioLocalizacaoSerializer(usuario.location)
         return Response(serializer.data)
 
-    @action(methods=['get'], detail=True, serializer_class=UltimaLocalizacaoSerializer)
-    def get_last_location(self, request, pk=None):
+    @action(methods=['get'], detail=False, serializer_class=UltimaLocalizacaoSerializer)
+    def get_last_location(self, request):
         """
         Retorna a última localização de um usuário existente
         """
-        usuario = self.get_object()
+        usuario = request.auth.user.perfil
         serializer = UltimaLocalizacaoSerializer(usuario.location.ultima_localizacao)
         return Response(serializer.data)
 
@@ -97,12 +97,12 @@ class UsuarioViewSet(viewsets.ModelViewSet):
     #     serializer = UsuarioLocalizacaoSerializer(usuario_locations)
     #     return Response(serializer.data)
 
-    @action(methods=['post'], detail=True, serializer_class=SendLocalizacaoSerializer)
-    def send_location(self, request, pk=None):
+    @action(methods=['post'], detail=False, serializer_class=SendLocalizacaoSerializer)
+    def send_location(self, request):
         """
         Registra uma nova localização de um usuário existente
         """
-        usuario = self.get_object()
+        usuario = request.auth.user.perfil
         serializer = SendLocalizacaoSerializer(data=request.data)
         if serializer.is_valid():
             usuario.add_location_json(request.data)
