@@ -1,11 +1,16 @@
-from rest_framework import serializers
+from rest_framework.serializers import Serializer, ModelSerializer, CharField, PrimaryKeyRelatedField, EmailField
 from django.contrib.auth.models import User
 from .models import Familia, PerfilUsuario
 
 
-class FamiliaSerializer(serializers.ModelSerializer):
-    nome = serializers.CharField()
-    participantes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+class LoginSerializer(Serializer):
+    username = CharField()
+    password = CharField()
+
+
+class FamiliaSerializer(ModelSerializer):
+    nome = CharField()
+    participantes = PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Familia
@@ -13,14 +18,14 @@ class FamiliaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class UsuarioSerializer(serializers.ModelSerializer):
-    familia_nome = serializers.PrimaryKeyRelatedField(source='familia.nome', many=False, read_only=True)
-    familia = serializers.PrimaryKeyRelatedField(many=False, queryset=Familia.objects.all())
-    username = serializers.CharField(source='user.username')
-    email = serializers.EmailField(source='user.email')
+class UsuarioSerializer(ModelSerializer):
+    familia_nome = PrimaryKeyRelatedField(source='familia.nome', many=False, read_only=True)
+    familia = PrimaryKeyRelatedField(many=False, queryset=Familia.objects.all())
+    username = CharField(source='user.username')
+    email = EmailField(source='user.email')
     # foto = serializers.ImageField()
-    cpf = serializers.CharField()
-    telefone = serializers.CharField()
+    cpf = CharField()
+    telefone = CharField()
 
     class Meta:
         model = PerfilUsuario

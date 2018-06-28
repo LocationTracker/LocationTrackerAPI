@@ -41,6 +41,10 @@ class PerfilUsuario(Model):
         super(PerfilUsuario, self).save(*args, **kwargs)
 
     @property
+    def token(self):
+        return Token.objects.get(user=self.user)
+
+    @property
     def location(self):
         return UsuarioLocalizacao.objects.get(id_usuario=self.user.id)
 

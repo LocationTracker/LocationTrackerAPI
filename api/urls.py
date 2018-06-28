@@ -12,6 +12,6 @@ schema_view = get_swagger_view(title='LocationTracker API')
 urlpatterns = [
     path('', schema_view),
     path('router/', include(router.urls)),
-    path('auth/', include('rest_framework.urls')),
-    path('router/auth/', TokenView.obtain_auth_token)
+    path('auth/', include('rest_framework.urls'))
+    # path('router/auth/', TokenView.obtain_auth_token)
 ]

@@ -3,7 +3,9 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.response import Response
-from .serializers import UsuarioSerializer
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
+from .serializers import UsuarioSerializer, LoginSerializer
 from .models import PerfilUsuario
 from location.serializers import UsuarioLocalizacaoSerializer, \
     SendLocalizacaoSerializer, UltimaLocalizacaoSerializer
@@ -29,6 +31,18 @@ class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = PerfilUsuario.objects.all()
     serializer_class = UsuarioSerializer
     http_method_names = ['get', 'post', 'put', 'patch']
+
+    @action(methods=['post'], detail=False, serializer_class=LoginSerializer)
+    def auth(self, request):
+        """
+        Retorna o usuario e seu token
+        """
+        usuario = get_object_or_404(PerfilUsuario, user__username=request.data['username'])
+        if not usuario.user.check_password(request.data['password']):
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        serializer = UsuarioSerializer(usuario, many=False)
+        return Response({'token': usuario.token.key, 'usuario': serializer.data})
+
 
     @action(methods=['get'], detail=True)
     def get_family_members(self, request, pk=None):
