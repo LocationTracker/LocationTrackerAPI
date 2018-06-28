@@ -26,8 +26,8 @@ class UsuarioViewSet(viewsets.ModelViewSet):
     update:
         Atualiza um usuário
     """
-    authentication_classes = [SessionAuthentication, TokenAuthentication]
-    permission_classes = [IsAuthenticated, AllowAny]
+    authentication_classes = []
+    permission_classes = [AllowAny]
     queryset = PerfilUsuario.objects.all()
     serializer_class = UsuarioSerializer
     http_method_names = ['get', 'post', 'put', 'patch']
